@@ -1,0 +1,4 @@
+load! core/vec
+load! core/map
+load! core/str
+load! core/io

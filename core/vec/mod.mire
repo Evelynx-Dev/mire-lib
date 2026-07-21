@@ -1,0 +1,34 @@
+extern fn rt_lists_len: (list :&list) :i64 lib "c"
+extern fn rt_lists_push_i64: (list, value :i64) :list lib "c"
+extern fn rt_lists_push_ptr: (list, value) :list lib "c"
+extern fn rt_lists_get_i64: (list :&list, index :i64) :i64 lib "c"
+extern fn rt_lists_get_ptr: (list :&list, index :i64) lib "c"
+extern fn rt_lists_set_i64: (list :&list, index :i64, value :i64) lib "c"
+extern fn rt_lists_pop: (list) :i64 lib "c"
+extern fn rt_lists_remove: (list, index :i64) lib "c"
+extern fn rt_lists_clear: (list) lib "c"
+extern fn rt_lists_concat: (list, other) lib "c"
+extern fn rt_lists_sort: (list) lib "c"
+extern fn rt_lists_reverse: (list :&vec[i64]) :vec[i64] lib "c"
+extern fn rt_lists_contains_i64: (list :&vec[i64], value :i64) :bool lib "c"
+extern fn rt_lists_index_of_i64: (list :&vec[i64], value :i64) :i64 lib "c"
+extern fn rt_lists_slice: (list :&list, start :i64, end :i64) :vec[i64] lib "c"
+extern fn rt_lists_flatten: (list :&list) :vec[i64] lib "c"
+extern fn rt_lists_unique: (list :&vec[i64]) :vec[i64] lib "c"
+
+pub fn len: (v :&list) :i64 { return rt_lists_len(v) }
+pub fn push: (v :list, value) :list { return rt_lists_push_ptr(v, value) }
+pub fn push_i64: (v :list, value :i64) :list { return rt_lists_push_i64(v, value) }
+pub fn pop: (v :list) :i64 { return rt_lists_pop(v) }
+pub fn get: (v :&list, index :i64) :i64 { return rt_lists_get_i64(v, index) }
+pub fn set: (v :&list, index :i64, value :i64) { rt_lists_set_i64(v, index, value) }
+pub fn remove: (v :list, index :i64) { rt_lists_remove(v, index) }
+pub fn clear: (v :list) { rt_lists_clear(v) }
+pub fn concat: (v :list, other) { rt_lists_concat(v, other) }
+pub fn sort: (v :list) { rt_lists_sort(v) }
+pub fn reverse: (v :&vec[i64]) :vec[i64] { return rt_lists_reverse(v) }
+pub fn contains: (v :&vec[i64], value :i64) :bool { return rt_lists_contains_i64(v, value) }
+pub fn index: (v :&vec[i64], value :i64) :i64 { return rt_lists_index_of_i64(v, value) }
+pub fn slice: (v :&list, start :i64, end :i64) :vec[i64] { return rt_lists_slice(v, start, end) }
+pub fn flatten: (v :&list) :vec[i64] { return rt_lists_flatten(v) }
+pub fn unique: (v :&vec[i64]) :vec[i64] { return rt_lists_unique(v) }

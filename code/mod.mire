@@ -1,4 +1,5 @@
-load! core/vec
-load! core/map
-load! core/str
-load! core/io
+load mire::vec
+load mire::map
+load mire::str
+load mire::io
+load mire::math

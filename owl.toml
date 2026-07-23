@@ -16,7 +16,8 @@ output = "bin"
 cache = "bin/.cache"
 
 [exports]
-vec = "core/vec"
-map = "core/map"
-str = "core/str"
-io = "core/io"
+vec  = "core/vec"
+map  = "core/map"
+str  = "core/str"
+io   = "core/io"
+math = "core/math"

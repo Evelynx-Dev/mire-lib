@@ -1,21 +1,35 @@
-extern fn rt_dicts_len: (dict :&dict) :i64 lib "c"
-extern fn rt_dicts_keys: (dict :&dict) :vec[str] lib "c"
-extern fn rt_dicts_values: (dict :&dict) :vec[i64] lib "c"
-extern fn rt_dicts_has: (dict :&dict, key :str) :bool lib "c"
-extern fn rt_dicts_get: (dict :&dict, key :str) :str lib "c"
-extern fn rt_dicts_get_i64: (dict :&dict, key :str) :i64 lib "c"
-extern fn rt_dicts_set: (dict, key :str, value) lib "c"
-extern fn rt_dicts_remove: (dict, key :str) lib "c"
-extern fn rt_dicts_entries: (dict :&dict) :i64 lib "c"
-extern fn rt_dicts_merge: (dict, other) lib "c"
+module map
 
-pub fn len: (m :&dict) :i64 { return rt_dicts_len(m) }
-pub fn keys: (m :&dict) :vec[str] { return rt_dicts_keys(m) }
-pub fn values: (m :&dict) :vec[i64] { return rt_dicts_values(m) }
-pub fn has: (m :&dict, key :str) :bool { return rt_dicts_has(m, key) }
-pub fn get: (m :&dict, key :str) :str { return rt_dicts_get(m, key) }
-pub fn get_i64: (m :&dict, key :str) :i64 { return rt_dicts_get_i64(m, key) }
-pub fn set: (m :dict, key :str, value) { rt_dicts_set(m, key, value) }
-pub fn remove: (m :dict, key :str) { rt_dicts_remove(m, key) }
-pub fn count: (m :&dict) :i64 { return rt_dicts_entries(m) }
-pub fn merge: (m :dict, other) { rt_dicts_merge(m, other) }
+// ── Core ───────────────────────────────────────────────────────────
+extern fn rt_dicts_len: (dict :&map[str anything]) :i64 lib "c"
+extern fn rt_dicts_has: (dict :&map[str anything], key :str) :bool lib "c"
+
+// ── Get ────────────────────────────────────────────────────────────
+extern fn rt_dicts_get: (dict :&map[str anything], key :str) :str lib "c"
+extern fn rt_dicts_get_i64: (dict :&map[str i64], key :str) :i64 lib "c"
+
+// ── Set ────────────────────────────────────────────────────────────
+extern fn rt_dicts_set: (dict :&map[str anything], key :str, value :anything) lib "c"
+extern fn rt_dicts_set_i64: (dict :&map[str i64], key :str, value :i64) lib "c"
+
+// ── Remove / Keys / Values ─────────────────────────────────────────
+extern fn rt_dicts_remove: (dict :&map[str anything], key :str) lib "c"
+extern fn rt_dicts_keys: (dict :&map[str anything]) :vec[str] lib "c"
+extern fn rt_dicts_values: (dict :&map[str i64]) :vec[i64] lib "c"
+extern fn rt_dicts_entries: (dict :&map[str anything]) :i64 lib "c"
+extern fn rt_dicts_merge: (dict :&map[str anything], other :&map[str anything]) lib "c"
+extern fn rt_dicts_is_empty: (dict :&map[str anything]) :bool lib "c"
+
+// ── Public API ─────────────────────────────────────────────────────
+pub fn len: (m :&map[str anything]) :i64 { return rt_dicts_len(m) }
+pub fn has: (m :&map[str anything], key :str) :bool { return rt_dicts_has(m, key) }
+pub fn get: (m :&map[str anything], key :str) :str { return rt_dicts_get(m, key) }
+pub fn get_i64: (m :&map[str i64], key :str) :i64 { return rt_dicts_get_i64(m, key) }
+pub fn set: (m :&map[str anything], key :str, value :anything) { rt_dicts_set(m, key, value) }
+pub fn set_i64: (m :&map[str i64], key :str, value :i64) { rt_dicts_set_i64(m, key, value) }
+pub fn remove: (m :&map[str anything], key :str) { rt_dicts_remove(m, key) }
+pub fn keys: (m :&map[str anything]) :vec[str] { return rt_dicts_keys(m) }
+pub fn values: (m :&map[str i64]) :vec[i64] { return rt_dicts_values(m) }
+pub fn count: (m :&map[str anything]) :i64 { return rt_dicts_entries(m) }
+pub fn merge: (m :&map[str anything], other :&map[str anything]) { rt_dicts_merge(m, other) }
+pub fn is_empty: (m :&map[str anything]) :bool { return rt_dicts_is_empty(m) }

@@ -38,8 +38,4 @@ pub fn unwrap: () {
     pub fn ptr: (ptr :ptr) :ptr { return rt_maybe_unwrap_ptr(ptr, 0, 0, "") }
 }
 
-pub fn unwrap::i64::or: (ptr :ptr, default_val :i64) :i64 { return rt_maybe_unwrap_or_i64(ptr, default_val) }
-pub fn unwrap::str::or: (ptr :ptr, default_val :ptr) :ptr { return rt_maybe_unwrap_or_str(ptr, default_val) }
-pub fn unwrap::f64::or: (ptr :ptr, default_val :f64) :f64 { return rt_maybe_unwrap_or_f64(ptr, default_val) }
-pub fn unwrap::ptr::or: (ptr :ptr, default_val :ptr) :ptr { return rt_maybe_unwrap_or_ptr(ptr, default_val) }
 pub fn free: (ptr :ptr) { rt_maybe_free(ptr) }

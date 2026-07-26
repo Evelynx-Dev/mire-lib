@@ -1,5 +1,6 @@
 module str
 
+// ── C runtime ───────────────────────────────────────────────────
 extern fn rt_strings_len: (s :&str) :i64 lib "c"
 extern fn rt_strings_to_upper: (s :&str) :str lib "c"
 extern fn rt_strings_to_lower: (s :&str) :str lib "c"
@@ -24,26 +25,70 @@ extern fn rt_f64_to_string: (value :f64) :str lib "c"
 extern fn rt_string_concat: (left :&str, right :&str) :str lib "c"
 extern fn rt_string_copy: (value :&str) :str lib "c"
 
+// ── len ─────────────────────────────────────────────────────────
 pub fn len: (s :&str) :i64 { return rt_strings_len(s) }
+
+// ── upper / lower ───────────────────────────────────────────────
 pub fn upper: (s :&str) :str { return rt_strings_to_upper(s) }
 pub fn lower: (s :&str) :str { return rt_strings_to_lower(s) }
+
+// ── trim ────────────────────────────────────────────────────────
 pub fn trim: (s :&str) :str { return rt_strings_trim(s) }
 pub fn strip: (s :&str) :str { return rt_strings_strip(s) }
+
+// ── contains ────────────────────────────────────────────────────
 pub fn contains: (s :&str, sub :&str) :bool { return rt_strings_contains(s, sub) }
-pub fn starts::with: (s :&str, prefix :&str) :bool { return rt_strings_starts_with(s, prefix) }
-pub fn ends::with: (s :&str, suffix :&str) :bool { return rt_strings_ends_with(s, suffix) }
+
+// ── starts ──────────────────────────────────────────────────────
+pub fn starts: () {
+    pub fn with: (s :&str, prefix :&str) :bool { return rt_strings_starts_with(s, prefix) }
+}
+
+// ── ends ────────────────────────────────────────────────────────
+pub fn ends: () {
+    pub fn with: (s :&str, suffix :&str) :bool { return rt_strings_ends_with(s, suffix) }
+}
+
+// ── index ───────────────────────────────────────────────────────
 pub fn index: (s :&str, sub :&str) :i64 { return rt_strings_index_of(s, sub) }
+
+// ── replace ─────────────────────────────────────────────────────
 pub fn replace: (s :&str, old :&str, new :&str) :str { return rt_strings_replace(s, old, new) }
 pub fn replace::first: (s :&str, old :&str, new :&str) :str { return rt_strings_replace_first(s, old, new) }
+
+// ── split / join ────────────────────────────────────────────────
 pub fn split: (s :&str, sep :&str) :vec[str] { return rt_strings_split(s, sep) }
 pub fn join: (parts :&vec[str], sep :&str) :str { return rt_strings_join_list(parts, sep) }
+
+// ── substr ──────────────────────────────────────────────────────
 pub fn substr: (s :&str, start :i64, len :i64) :str { return rt_strings_substr(s, start, len) }
+
+// ── repeat ──────────────────────────────────────────────────────
 pub fn repeat: (s :&str, n :i64) :str { return rt_strings_repeat(s, n) }
-pub fn pad::left: (s :&str, total_len :i64, pad_char :u8) :str { return rt_strings_pad_left(s, total_len, pad_char) }
-pub fn pad::right: (s :&str, total_len :i64, pad_char :u8) :str { return rt_strings_pad_right(s, total_len, pad_char) }
-pub fn from::i64: (n :i64) :str { return rt_i64_to_string(n) }
-pub fn to::i64: (s :&str) :i64 { return rt_string_to_i64(s) }
-pub fn from::bool: (b :i64) :str { return rt_bool_to_string(b) }
-pub fn from::f64: (v :f64) :str { return rt_f64_to_string(v) }
+
+// ── pad ─────────────────────────────────────────────────────────
+pub fn pad: () {
+    pub fn left: (s :&str, total_len :i64, pad_char :u8) :str { return rt_strings_pad_left(s, total_len, pad_char) }
+    pub fn right: (s :&str, total_len :i64, pad_char :u8) :str { return rt_strings_pad_right(s, total_len, pad_char) }
+}
+
+// ── from ────────────────────────────────────────────────────────
+pub fn from: () {
+    pub fn i64: (n :i64) :str { return rt_i64_to_string(n) }
+    pub fn bool: (b :i64) :str { return rt_bool_to_string(b) }
+    pub fn f64: (v :f64) :str { return rt_f64_to_string(v) }
+}
+
+// ── to ──────────────────────────────────────────────────────────
+pub fn to: () {
+    pub fn i64: (s :&str) :i64 { return rt_string_to_i64(s) }
+}
+
+// ── concat / copy ───────────────────────────────────────────────
 pub fn concat: (left :&str, right :&str) :str { return rt_string_concat(left, right) }
 pub fn copy: (s :&str) :str { return rt_string_copy(s) }
+
+// ── is ──────────────────────────────────────────────────────────
+pub fn is: () {
+    pub fn empty: (s :&str) :bool { return rt_strings_len(s) == 0 }
+}

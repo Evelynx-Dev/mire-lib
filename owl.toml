@@ -1,6 +1,6 @@
 [project]
 name = "mire"
-version = "0.0.1"
+version = "0.0.2"
 description = "Library for the Mire language"
 entry = "code/mod.mire"
 
@@ -22,5 +22,3 @@ str = "core/str"
 maybe = "core/maybe"
 result = "core/result"
 arr = "core/arr"
-io = "core/io"
-math = "core/math"

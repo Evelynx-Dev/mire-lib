@@ -2,6 +2,20 @@
 
 All notable changes to the mire standard library.
 
+## [0.0.3] - 2026-07-26 (Maybe unwrap::or + Section Comments)
+
+### Added
+
+- **`mire::maybe`** — Added `unwrap::or::i64/str/f64/ptr` nested group for unwrap-with-default.
+  All 4 C runtime functions (`rt_maybe_unwrap_or_*`) were already declared but had no
+  public API. Added section comments for consistency with other modules.
+
+### Changed
+
+- Verified all 6 modules (vec, map, str, arr, result, maybe) compile and link correctly
+  with nested function grouping. No parser bug exists — type keywords (`i64`, `str`, etc.)
+  are tokenized as `Ident` by the lexer, so `is_member_name_token` handles them correctly.
+
 ## [0.0.2] - 2026-07-26 (Nested Function Grouping)
 
 ### Changed

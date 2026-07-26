@@ -17,6 +17,7 @@ extern fn rt_maybe_unwrap_or_f64: (ptr :ptr, default_val :f64) :f64 lib "c"
 extern fn rt_maybe_unwrap_or_ptr: (ptr :ptr, default_val :ptr) :ptr lib "c"
 extern fn rt_maybe_free: (ptr :ptr) lib "c"
 
+// ── some ────────────────────────────────────────────────────────
 pub fn some: () {
     pub fn i64: (value :i64) :ptr { return rt_maybe_some_i64(value) }
     pub fn str: (value :str) :ptr { return rt_maybe_some_str(value) }
@@ -24,18 +25,28 @@ pub fn some: () {
     pub fn ptr: (value :ptr) :ptr { return rt_maybe_some_ptr(value) }
 }
 
+// ── none ────────────────────────────────────────────────────────
 pub fn none: () :ptr { return rt_maybe_none_as_ptr() }
 
+// ── is ──────────────────────────────────────────────────────────
 pub fn is: () {
     pub fn none: (ptr :ptr) :bool { return rt_maybe_is_none(ptr) }
     pub fn some: (ptr :ptr) :bool { return rt_maybe_is_some(ptr) }
 }
 
+// ── unwrap ──────────────────────────────────────────────────────
 pub fn unwrap: () {
     pub fn i64: (ptr :ptr) :i64 { return rt_maybe_unwrap_i64(ptr, 0, 0, "") }
     pub fn str: (ptr :ptr) :ptr { return rt_maybe_unwrap_str(ptr, 0, 0, "") }
     pub fn f64: (ptr :ptr) :f64 { return rt_maybe_unwrap_f64(ptr, 0, 0, "") }
     pub fn ptr: (ptr :ptr) :ptr { return rt_maybe_unwrap_ptr(ptr, 0, 0, "") }
+    pub fn or: () {
+        pub fn i64: (ptr :ptr, default :i64) :i64 { return rt_maybe_unwrap_or_i64(ptr, default) }
+        pub fn str: (ptr :ptr, default :ptr) :ptr { return rt_maybe_unwrap_or_str(ptr, default) }
+        pub fn f64: (ptr :ptr, default :f64) :f64 { return rt_maybe_unwrap_or_f64(ptr, default) }
+        pub fn ptr: (ptr :ptr, default :ptr) :ptr { return rt_maybe_unwrap_or_ptr(ptr, default) }
+    }
 }
 
+// ── free ────────────────────────────────────────────────────────
 pub fn free: (ptr :ptr) { rt_maybe_free(ptr) }

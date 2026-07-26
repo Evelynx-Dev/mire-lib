@@ -1,22 +1,24 @@
-# mire v0.0.1
+# mire v0.0.3
 
-Standard library for the [Mire](https://mire-lang.org) programming language.
+Standard library for the [Mire](https://github.com/mire-lang) programming language.
 
 ## Modules
 
 | Module | Description |
 |--------|-------------|
-| `mire::vec` | Vector operations (push, get, set, len, sort, etc.) |
-| `mire::map` | Map/dictionary operations (get, set, has, keys, values) |
-| `mire::str` | String operations (len, upper, lower, split, join, etc.) |
-| `mire::io` | I/O primitives (print, println, input) |
+| `mire::vec` | Vector operations (`push::i64`, `get`, `set`, `len`, `sort`, etc.) |
+| `mire::map` | Map/dictionary operations (`get::i64`, `set::i64`, `has`, `keys`, `values`) |
+| `mire::str` | String operations (`len`, `upper`, `lower`, `split`, `join`, etc.) |
+| `mire::maybe` | Optional types (`some`, `none`, `unwrap`, `unwrap::or`, `map`, `and_then`) |
+| `mire::result` | Result types (`ok`, `err`, `is`, `unwrap`, `unwrap::or`, `map`) |
+| `mire::arr` | Fixed-size array operations (`new`, `get`, `set`, `len`) |
 
 ## Usage
 
 ```toml
 # owl.toml
 [dependencies]
-mire = "0.0.1"
+mire = "0.0.3"
 ```
 
 ```mire
@@ -24,22 +26,22 @@ load mire
 
 pub fn main: () {
     set v = [] :vec[i64] mut
-    set v = mire::vec::push(v 42)
+    set v = mire::vec::push::i64(v 42)
     set n = mire::vec::len(v)
     use dasu(n) // "1"
 
     set m = [] :map[str i64] mut
-    set m = mire::map::set(m "key" 100)
-    set val = mire::map::get_i64(m "key")
+    set m = mire::map::set::i64(m "key" 100)
+    set val = mire::map::get::i64(m "key")
     use dasu(val) // "100"
 }
 ```
 
 ## Design
 
-- **One-word philosophy**: `mire::vec::push`, `mire::map::set`, `mire::str::len`
+- **Nested function grouping**: `push::i64`, `get::i64`, `set::i64` — type suffixes for polymorphic operations
 - **Independent package**: does not require kioto as a dependency
-- **Thin wrappers**: each function wraps a single runtime C function (`rt_*`/`pal_*`)
+- **Thin wrappers**: each function wraps a single runtime C function (`rt_*`)
 - **No version()**: version is tracked in `owl.toml` and the lockfile
 
 ## Building

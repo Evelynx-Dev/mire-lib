@@ -1,9 +1,0 @@
-module io
-
-// ── Output ─────────────────────────────────────────────────────────
-pub fn print: (msg :&str) { use dasu(*msg) }
-pub fn println: (msg :&str) { use dasu(*msg) }
-
-// ── Input ──────────────────────────────────────────────────────────
-pub fn input: () :str { return ireru() }
-pub fn input_prompt: (prompt :&str) :str { return ireru(*prompt) }

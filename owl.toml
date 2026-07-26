@@ -1,7 +1,7 @@
 [project]
 name = "mire"
 version = "0.0.1"
-description = "Standard library for the Mire language"
+description = "Library for the Mire language"
 entry = "code/mod.mire"
 
 [build]
@@ -16,8 +16,11 @@ output = "bin"
 cache = "bin/.cache"
 
 [exports]
-vec  = "core/vec"
-map  = "core/map"
-str  = "core/str"
-io   = "core/io"
+vec = "core/vec"
+map = "core/map"
+str = "core/str"
+maybe = "core/maybe"
+result = "core/result"
+arr = "core/arr"
+io = "core/io"
 math = "core/math"

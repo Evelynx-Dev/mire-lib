@@ -1,0 +1,35 @@
+module maybe
+
+extern fn rt_maybe_some_i64: (value :i64) :ptr lib "c"
+extern fn rt_maybe_some_str: (value :str) :ptr lib "c"
+extern fn rt_maybe_some_f64: (value :f64) :ptr lib "c"
+extern fn rt_maybe_some_ptr: (value :ptr) :ptr lib "c"
+extern fn rt_maybe_none_as_ptr: () :ptr lib "c"
+extern fn rt_maybe_is_none: (ptr :ptr) :bool lib "c"
+extern fn rt_maybe_is_some: (ptr :ptr) :bool lib "c"
+extern fn rt_maybe_unwrap_i64: (ptr :ptr, line :i64, col :i64, file :ptr) :i64 lib "c"
+extern fn rt_maybe_unwrap_str: (ptr :ptr, line :i64, col :i64, file :ptr) :ptr lib "c"
+extern fn rt_maybe_unwrap_f64: (ptr :ptr, line :i64, col :i64, file :ptr) :f64 lib "c"
+extern fn rt_maybe_unwrap_ptr: (ptr :ptr, line :i64, col :i64, file :ptr) :ptr lib "c"
+extern fn rt_maybe_unwrap_or_i64: (ptr :ptr, default_val :i64) :i64 lib "c"
+extern fn rt_maybe_unwrap_or_str: (ptr :ptr, default_val :ptr) :ptr lib "c"
+extern fn rt_maybe_unwrap_or_f64: (ptr :ptr, default_val :f64) :f64 lib "c"
+extern fn rt_maybe_unwrap_or_ptr: (ptr :ptr, default_val :ptr) :ptr lib "c"
+extern fn rt_maybe_free: (ptr :ptr) lib "c"
+
+pub fn some::i64: (value :i64) :ptr { return rt_maybe_some_i64(value) }
+pub fn some::str: (value :str) :ptr { return rt_maybe_some_str(value) }
+pub fn some::f64: (value :f64) :ptr { return rt_maybe_some_f64(value) }
+pub fn some::ptr: (value :ptr) :ptr { return rt_maybe_some_ptr(value) }
+pub fn none: () :ptr { return rt_maybe_none_as_ptr() }
+pub fn is::none: (ptr :ptr) :bool { return rt_maybe_is_none(ptr) }
+pub fn is::some: (ptr :ptr) :bool { return rt_maybe_is_some(ptr) }
+pub fn unwrap::i64: (ptr :ptr) :i64 { return rt_maybe_unwrap_i64(ptr, 0, 0, "") }
+pub fn unwrap::str: (ptr :ptr) :ptr { return rt_maybe_unwrap_str(ptr, 0, 0, "") }
+pub fn unwrap::f64: (ptr :ptr) :f64 { return rt_maybe_unwrap_f64(ptr, 0, 0, "") }
+pub fn unwrap::ptr: (ptr :ptr) :ptr { return rt_maybe_unwrap_ptr(ptr, 0, 0, "") }
+pub fn unwrap::i64::or: (ptr :ptr, default_val :i64) :i64 { return rt_maybe_unwrap_or_i64(ptr, default_val) }
+pub fn unwrap::str::or: (ptr :ptr, default_val :ptr) :ptr { return rt_maybe_unwrap_or_str(ptr, default_val) }
+pub fn unwrap::f64::or: (ptr :ptr, default_val :f64) :f64 { return rt_maybe_unwrap_or_f64(ptr, default_val) }
+pub fn unwrap::ptr::or: (ptr :ptr, default_val :ptr) :ptr { return rt_maybe_unwrap_or_ptr(ptr, default_val) }
+pub fn free: (ptr :ptr) { rt_maybe_free(ptr) }

@@ -1,82 +1,41 @@
 module vec
 
-// ── Core length (works on any vec type) ────────────────────────────
-extern fn rt_lists_len: (list :&anything) :i64 lib "c"
-extern fn rt_vec_len: (list :&anything) :i64 lib "c"
+extern fn rt_vecs_len: (list :&anything) :i64 lib "c"
+extern fn rt_vecs_push_i64: (list :vec[i64], value :i64) :vec[i64] lib "c"
+extern fn rt_vecs_push_ptr: (list :vec[str], value :str) :vec[str] lib "c"
+extern fn rt_vecs_pop: (list :&vec[i64]) :i64 lib "c"
+extern fn rt_vecs_get_i64: (list :&vec[i64], index :i64) :i64 lib "c"
+extern fn rt_vecs_get_ptr: (list :vec[str], index :i64) :str lib "c"
+extern fn rt_vecs_first: (list :&vec[i64], line :i64, col :i64, file :str) :i64 lib "c"
+extern fn rt_vecs_last: (list :&vec[i64], line :i64, col :i64, file :str) :i64 lib "c"
+extern fn rt_vecs_remove: (list :&vec[i64], index :i64) lib "c"
+extern fn rt_vecs_clear: (list :&vec[i64]) lib "c"
+extern fn rt_vecs_sort: (list :&vec[i64]) lib "c"
+extern fn rt_vecs_reverse: (list :&vec[i64]) :vec[i64] lib "c"
+extern fn rt_vecs_unique: (list :&vec[i64]) :vec[i64] lib "c"
+extern fn rt_vecs_contains_i64: (list :&vec[i64], value :i64) :bool lib "c"
+extern fn rt_vecs_index_of_i64: (list :&vec[i64], value :i64) :i64 lib "c"
+extern fn rt_vecs_slice: (list :&vec[i64], start :i64, end :i64) :vec[i64] lib "c"
+extern fn rt_vecs_flatten: (list :&vec[i64]) :vec[i64] lib "c"
+extern fn rt_vecs_concat: (list :&vec[i64], other :&vec[i64]) lib "c"
+extern fn rt_lists_join_list: (list :vec[str], sep :&str) :str lib "c"
 
-// ── Push i64 ──────────────────────────────────────────────────────
-extern fn rt_lists_push_i64: (list :vec[i64], value :i64) :vec[i64] lib "c"
-
-// ── Pop ────────────────────────────────────────────────────────────
-extern fn rt_lists_pop: (list :&vec[i64]) :i64 lib "c"
-
-// ── Get/Set (type-specific) ────────────────────────────────────────
-extern fn rt_lists_get_i64: (list :&vec[i64], index :i64) :i64 lib "c"
-extern fn rt_vec_get_str: (list :&vec[str], index :i64) :str lib "c"
-extern fn rt_lists_set_i64: (list :&vec[i64], index :i64, value :i64) lib "c"
-
-// ── Remove / Clear ─────────────────────────────────────────────────
-extern fn rt_lists_remove: (list :&vec[i64], index :i64) lib "c"
-extern fn rt_lists_clear: (list :&vec[i64]) lib "c"
-
-// ── Sort / Reverse / Unique ────────────────────────────────────────
-extern fn rt_lists_sort: (list :&vec[i64]) lib "c"
-extern fn rt_lists_reverse: (list :&vec[i64]) :vec[i64] lib "c"
-extern fn rt_lists_unique: (list :&vec[i64]) :vec[i64] lib "c"
-
-// ── Contains / IndexOf ─────────────────────────────────────────────
-extern fn rt_lists_contains_i64: (list :&vec[i64], value :i64) :bool lib "c"
-extern fn rt_lists_index_of_i64: (list :&vec[i64], value :i64) :i64 lib "c"
-
-// ── Slice / Flatten / Concat ───────────────────────────────────────
-extern fn rt_lists_slice: (list :&vec[i64], start :i64, end :i64) :vec[i64] lib "c"
-extern fn rt_lists_flatten: (list :&vec[i64]) :vec[i64] lib "c"
-extern fn rt_lists_concat: (list :&vec[i64], other :&vec[i64]) lib "c"
-
-// ── First / Last ───────────────────────────────────────────────────
-extern fn rt_lists_first: (list :&vec[i64]) :i64 lib "c"
-extern fn rt_lists_last: (list :&vec[i64]) :i64 lib "c"
-
-// ── Join (vec of str) ──────────────────────────────────────────────
-extern fn rt_lists_join_list: (list :&vec[str], sep :&str) :str lib "c"
-
-// ── Public API: len ───────────────────────────────────────────────
-pub fn len: (v :&anything) :i64 { return rt_lists_len(v) }
-
-// ── Public API: push_i64 ──────────────────────────────────────────
-pub fn push_i64: (v :vec[i64], value :i64) :vec[i64] { return rt_lists_push_i64(v, value) }
-
-// ── Public API: pop ────────────────────────────────────────────────
-pub fn pop: (v :&vec[i64]) :i64 { return rt_lists_pop(v) }
-
-// ── Public API: get_i64 / get_str ─────────────────────────────────
-pub fn get_i64: (v :&vec[i64], index :i64) :i64 { return rt_lists_get_i64(v, index) }
-pub fn get_str: (v :&vec[str], index :i64) :str { return rt_vec_get_str(v, index) }
-
-// ── Public API: set_i64 ───────────────────────────────────────────
-pub fn set_i64: (v :&vec[i64], index :i64, value :i64) { rt_lists_set_i64(v, index, value) }
-
-// ── Public API: remove / clear ─────────────────────────────────────
-pub fn remove: (v :&vec[i64], index :i64) { rt_lists_remove(v, index) }
-pub fn clear: (v :&vec[i64]) { rt_lists_clear(v) }
-
-// ── Public API: sort / reverse / unique ────────────────────────────
-pub fn sort: (v :&vec[i64]) { rt_lists_sort(v) }
-pub fn reverse: (v :&vec[i64]) :vec[i64] { return rt_lists_reverse(v) }
-pub fn unique: (v :&vec[i64]) :vec[i64] { return rt_lists_unique(v) }
-
-// ── Public API: contains / index ───────────────────────────────────
-pub fn contains: (v :&vec[i64], value :i64) :bool { return rt_lists_contains_i64(v, value) }
-pub fn index: (v :&vec[i64], value :i64) :i64 { return rt_lists_index_of_i64(v, value) }
-
-// ── Public API: slice / flatten / concat ───────────────────────────
-pub fn slice: (v :&vec[i64], start :i64, end :i64) :vec[i64] { return rt_lists_slice(v, start, end) }
-pub fn flatten: (v :&vec[i64]) :vec[i64] { return rt_lists_flatten(v) }
-pub fn concat: (v :&vec[i64], other :&vec[i64]) { rt_lists_concat(v, other) }
-
-// ── Public API: first / last ──────────────────────────────────────
-pub fn first: (v :&vec[i64]) :i64 { return rt_lists_first(v) }
-pub fn last: (v :&vec[i64]) :i64 { return rt_lists_last(v) }
-
-// ── Public API: join ───────────────────────────────────────────────
-pub fn join: (v :&vec[str], sep :&str) :str { return rt_lists_join_list(v, sep) }
+pub fn len: (v :&anything) :i64 { return rt_vecs_len(v) }
+pub fn push::i64: (v :vec[i64], value :i64) :vec[i64] { return rt_vecs_push_i64(v, value) }
+pub fn push::str: (v :vec[str], value :str) :vec[str] { return rt_vecs_push_ptr(v, value) }
+pub fn pop::i64: (v :&vec[i64]) :i64 { return rt_vecs_pop(v) }
+pub fn get::i64: (v :&vec[i64], index :i64) :i64 { return rt_vecs_get_i64(v, index) }
+pub fn get::str: (v :vec[str], index :i64) :str { return rt_vecs_get_ptr(v, index) }
+pub fn first::i64: (v :&vec[i64]) :i64 { return rt_vecs_first(v, 0, 0, "") }
+pub fn last::i64: (v :&vec[i64]) :i64 { return rt_vecs_last(v, 0, 0, "") }
+pub fn remove: (v :&vec[i64], index :i64) { rt_vecs_remove(v, index) }
+pub fn clear: (v :&vec[i64]) { rt_vecs_clear(v) }
+pub fn sort: (v :&vec[i64]) { rt_vecs_sort(v) }
+pub fn reverse: (v :&vec[i64]) :vec[i64] { return rt_vecs_reverse(v) }
+pub fn unique: (v :&vec[i64]) :vec[i64] { return rt_vecs_unique(v) }
+pub fn contains::i64: (v :&vec[i64], value :i64) :bool { return rt_vecs_contains_i64(v, value) }
+pub fn index::i64: (v :&vec[i64], value :i64) :i64 { return rt_vecs_index_of_i64(v, value) }
+pub fn slice: (v :&vec[i64], start :i64, end :i64) :vec[i64] { return rt_vecs_slice(v, start, end) }
+pub fn flatten: (v :&vec[i64]) :vec[i64] { return rt_vecs_flatten(v) }
+pub fn concat: (v :&vec[i64], other :&vec[i64]) { rt_vecs_concat(v, other) }
+pub fn join: (v :vec[str], sep :&str) :str { return rt_lists_join_list(v, sep) }

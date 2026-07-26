@@ -1,5 +1,6 @@
 load mire::vec
 load mire::map
 load mire::str
-load mire::io
-load mire::math
+load mire::maybe
+load mire::result
+load mire::arr

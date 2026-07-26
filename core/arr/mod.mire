@@ -1,0 +1,17 @@
+module arr
+
+extern fn rt_arr_len: (arr :ptr, count :i64) :i64 lib "c"
+extern fn rt_arr_first_i64: (arr :ptr, count :i64, line :i64, col :i64, file :ptr) :i64 lib "c"
+extern fn rt_arr_last_i64: (arr :ptr, count :i64, line :i64, col :i64, file :ptr) :i64 lib "c"
+extern fn rt_arr_contains_i64: (arr :ptr, count :i64, needle :i64) :bool lib "c"
+extern fn rt_arr_index_of_i64: (arr :ptr, count :i64, needle :i64) :i64 lib "c"
+extern fn rt_arr_reverse_i64: (arr :ptr, count :i64) lib "c"
+extern fn rt_arr_join: (arr :ptr, count :i64, sep :ptr) :ptr lib "c"
+
+pub fn len: (arr :ptr, count :i64) :i64 { return rt_arr_len(arr, count) }
+pub fn first::i64: (arr :ptr, count :i64) :i64 { return rt_arr_first_i64(arr, count, 0, 0, "") }
+pub fn last::i64: (arr :ptr, count :i64) :i64 { return rt_arr_last_i64(arr, count, 0, 0, "") }
+pub fn contains::i64: (arr :ptr, count :i64, needle :i64) :bool { return rt_arr_contains_i64(arr, count, needle) }
+pub fn index::i64: (arr :ptr, count :i64, needle :i64) :i64 { return rt_arr_index_of_i64(arr, count, needle) }
+pub fn reverse::i64: (arr :ptr, count :i64) { rt_arr_reverse_i64(arr, count) }
+pub fn join: (arr :ptr, count :i64, sep :ptr) :ptr { return rt_arr_join(arr, count, sep) }

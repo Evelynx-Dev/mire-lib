@@ -1,35 +1,43 @@
 module map
 
-// ── Core ───────────────────────────────────────────────────────────
-extern fn rt_dicts_len: (dict :&map[str anything]) :i64 lib "c"
-extern fn rt_dicts_has: (dict :&map[str anything], key :str) :bool lib "c"
+// ── Core ──────────────────────────────────────────────────────────
+extern fn rt_maps_len: (dict :&map[str anything]) :i64 lib "c"
+extern fn rt_maps_has: (dict :&map[str anything], key :str) :bool lib "c"
+extern fn rt_maps_is_empty: (dict :&map[str anything]) :bool lib "c"
 
-// ── Get ────────────────────────────────────────────────────────────
-extern fn rt_dicts_get: (dict :&map[str anything], key :str) :str lib "c"
-extern fn rt_dicts_get_i64: (dict :&map[str i64], key :str) :i64 lib "c"
+// ── Get ───────────────────────────────────────────────────────────
+extern fn rt_maps_get: (dict :&map[str anything], key :str) :str lib "c"
+extern fn rt_maps_get_i64: (dict :&map[str i64], key :str) :i64 lib "c"
 
-// ── Set ────────────────────────────────────────────────────────────
-extern fn rt_dicts_set: (dict :&map[str anything], key :str, value :anything) lib "c"
-extern fn rt_dicts_set_i64: (dict :&map[str i64], key :str, value :i64) lib "c"
+// ── Set ───────────────────────────────────────────────────────────
+extern fn rt_maps_set: (dict :&map[str anything], key :str, value :anything) lib "c"
+extern fn rt_maps_set_i64: (dict :&map[str i64], key :str, value :i64) lib "c"
 
-// ── Remove / Keys / Values ─────────────────────────────────────────
-extern fn rt_dicts_remove: (dict :&map[str anything], key :str) lib "c"
-extern fn rt_dicts_keys: (dict :&map[str anything]) :vec[str] lib "c"
-extern fn rt_dicts_values: (dict :&map[str i64]) :vec[i64] lib "c"
-extern fn rt_dicts_entries: (dict :&map[str anything]) :i64 lib "c"
-extern fn rt_dicts_merge: (dict :&map[str anything], other :&map[str anything]) lib "c"
-extern fn rt_dicts_is_empty: (dict :&map[str anything]) :bool lib "c"
+// ── Remove / Keys / Values / Entries ──────────────────────────────
+extern fn rt_maps_remove: (dict :&map[str anything], key :str) lib "c"
+extern fn rt_maps_keys: (dict :&map[str anything]) :vec[str] lib "c"
+extern fn rt_maps_values: (dict :&map[str i64]) :vec[i64] lib "c"
+extern fn rt_maps_entries: (dict :&map[str anything]) :i64 lib "c"
+extern fn rt_maps_merge: (dict :&map[str anything], other :&map[str anything]) lib "c"
 
-// ── Public API ─────────────────────────────────────────────────────
-pub fn len: (m :&map[str anything]) :i64 { return rt_dicts_len(m) }
-pub fn has: (m :&map[str anything], key :str) :bool { return rt_dicts_has(m, key) }
-pub fn get: (m :&map[str anything], key :str) :str { return rt_dicts_get(m, key) }
-pub fn get_i64: (m :&map[str i64], key :str) :i64 { return rt_dicts_get_i64(m, key) }
-pub fn set: (m :&map[str anything], key :str, value :anything) { rt_dicts_set(m, key, value) }
-pub fn set_i64: (m :&map[str i64], key :str, value :i64) { rt_dicts_set_i64(m, key, value) }
-pub fn remove: (m :&map[str anything], key :str) { rt_dicts_remove(m, key) }
-pub fn keys: (m :&map[str anything]) :vec[str] { return rt_dicts_keys(m) }
-pub fn values: (m :&map[str i64]) :vec[i64] { return rt_dicts_values(m) }
-pub fn count: (m :&map[str anything]) :i64 { return rt_dicts_entries(m) }
-pub fn merge: (m :&map[str anything], other :&map[str anything]) { rt_dicts_merge(m, other) }
-pub fn is_empty: (m :&map[str anything]) :bool { return rt_dicts_is_empty(m) }
+// ── Public API ────────────────────────────────────────────────────
+pub fn len: (m :&map[str anything]) :i64 { return rt_maps_len(m) }
+pub fn has: (m :&map[str anything], key :str) :bool { return rt_maps_has(m, key) }
+pub fn is::empty: (m :&map[str anything]) :bool { return rt_maps_is_empty(m) }
+
+// ── Public API: get ──────────────────────────────────────────────
+pub fn get::str: (m :&map[str anything], key :str) :str { return rt_maps_get(m, key) }
+pub fn get::i64: (m :&map[str i64], key :str) :i64 { return rt_maps_get_i64(m, key) }
+
+// ── Public API: set ──────────────────────────────────────────────
+pub fn set::str: (m :&map[str anything], key :str, value :anything) { rt_maps_set(m, key, value) }
+pub fn set::i64: (m :&map[str i64], key :str, value :i64) { rt_maps_set_i64(m, key, value) }
+
+// ── Public API: remove / keys / values ───────────────────────────
+pub fn remove: (m :&map[str anything], key :str) { rt_maps_remove(m, key) }
+pub fn keys: (m :&map[str anything]) :vec[str] { return rt_maps_keys(m) }
+pub fn values::i64: (m :&map[str i64]) :vec[i64] { return rt_maps_values(m) }
+
+// ── Public API: entries / merge ──────────────────────────────────
+pub fn entries: (m :&map[str anything]) :i64 { return rt_maps_entries(m) }
+pub fn merge: (m :&map[str anything], other :&map[str anything]) { rt_maps_merge(m, other) }

@@ -1,6 +1,2 @@
-load mire::vec
-load mire::map
-load mire::str
-load mire::maybe
-load mire::result
-load mire::arr
+// Mire exports its modules individually through owl.toml. Consumers should
+// load the module they use, for example: load mire::vec.

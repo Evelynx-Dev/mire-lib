@@ -16,8 +16,8 @@ extern fn rt_strings_split: (s :&str, sep :&str) :vec[str] lib "c"
 extern fn rt_strings_join_list: (parts :&vec[str], sep :&str) :str lib "c"
 extern fn rt_strings_substr: (s :&str, start :i64, len :i64) :str lib "c"
 extern fn rt_strings_repeat: (s :&str, n :i64) :str lib "c"
-extern fn rt_strings_pad_left: (s :&str, total_len :i64, pad_char :u8) :str lib "c"
-extern fn rt_strings_pad_right: (s :&str, total_len :i64, pad_char :u8) :str lib "c"
+extern fn rt_strings_pad_left: (s :&str, total_len :i64, pad :&str) :str lib "c"
+extern fn rt_strings_pad_right: (s :&str, total_len :i64, pad :&str) :str lib "c"
 extern fn rt_i64_to_string: (value :i64) :str lib "c"
 extern fn rt_string_to_i64: (s :&str) :i64 lib "c"
 extern fn rt_bool_to_string: (value :i64) :str lib "c"
@@ -68,8 +68,8 @@ pub fn repeat: (s :&str, n :i64) :str { return rt_strings_repeat(s, n) }
 
 // ── pad ─────────────────────────────────────────────────────────
 pub fn pad: () {
-    pub fn left: (s :&str, total_len :i64, pad_char :u8) :str { return rt_strings_pad_left(s, total_len, pad_char) }
-    pub fn right: (s :&str, total_len :i64, pad_char :u8) :str { return rt_strings_pad_right(s, total_len, pad_char) }
+    pub fn left: (s :&str, total_len :i64, pad :&str) :str { return rt_strings_pad_left(s, total_len, pad) }
+    pub fn right: (s :&str, total_len :i64, pad :&str) :str { return rt_strings_pad_right(s, total_len, pad) }
 }
 
 // ── from ────────────────────────────────────────────────────────

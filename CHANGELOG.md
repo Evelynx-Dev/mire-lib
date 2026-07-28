@@ -2,6 +2,38 @@
 
 All notable changes to the mire standard library.
 
+## [0.0.5] - 2026-07-28 (Runtime ABI alignment)
+
+### Fixed
+
+- Corrected `str::pad::left/right` to accept `&str`, matching the current
+  runtime ABI instead of passing a scalar `u8` as a pointer.
+- Switched `vec::join` to the canonical `rt_strings_join_list` runtime symbol;
+  the old list-prefixed symbol remains only as an Avenys compatibility alias.
+- Removed the misleading aggregate-entrypoint claim; consumers load exported
+  modules explicitly with `load mire::<module>`.
+- Synchronized the package and README version with the current release.
+- Updated the Kioto compatibility reference to the current `2.4.1` release.
+
+## [0.0.4] - 2026-07-27 (Kioto 2.4.0 compat)
+
+### Changed
+
+- **Kioto 2.4.1** now required for `vec[str]` → `const char **argv`
+  marshaling and the new blocking `proc.spawn(cmd, args)` API.
+- `mire::fs` module now uses `pal_dir_next_name` instead of the broken
+  `pal_dir_next` FFI declaration. Directory iteration is now safe (no
+  struct-return ABI mismatch).
+- `mire::proc::spawn(cmd, args)` — now executes without shell (uses
+  `pal_proc_create` + `PAL_SPAWN_WAIT`). `args` vector is correctly
+  passed as individual argv elements.
+- `mire::proc::wait(p)` — now uses handle-based `pal_proc_wait(p.handle)`
+  instead of the broken PID-based `pal_proc_wait_pid`.
+- `mire::fs::join(dir, name, ext)` — now uses `rt_string_concat` instead
+  of shadowed `concat` builtin.
+- `mire::fs::dir`, `mire::fs::name`, `mire::fs::ext` — fixed `concat`/`substr`
+  builtin shadowing by importing all Kioto modules.
+
 ## [0.0.3] - 2026-07-26 (Maybe unwrap::or + Section Comments)
 
 ### Added

@@ -4,9 +4,10 @@ module vec
 extern fn rt_vecs_len: (list :&anything) :i64 lib "c"
 extern fn rt_vecs_push_i64: (list :vec[i64], value :i64) :vec[i64] lib "c"
 extern fn rt_vecs_push_ptr: (list :vec[str], value :str) :vec[str] lib "c"
+extern fn rt_vecs_set_i64: (list :&vec[i64], index :i64, value :i64) lib "c"
 extern fn rt_vecs_pop: (list :&vec[i64]) :i64 lib "c"
 extern fn rt_vecs_get_i64: (list :&vec[i64], index :i64) :i64 lib "c"
-extern fn rt_vecs_get_ptr: (list :vec[str], index :i64) :str lib "c"
+extern fn rt_vecs_get_ptr: (list, index :i64) :str lib "c"
 extern fn rt_vecs_first: (list :&vec[i64], line :i64, col :i64, file :str) :i64 lib "c"
 extern fn rt_vecs_last: (list :&vec[i64], line :i64, col :i64, file :str) :i64 lib "c"
 extern fn rt_vecs_remove: (list :&vec[i64], index :i64) lib "c"
@@ -35,10 +36,15 @@ pub fn pop: () {
     pub fn i64: (v :&vec[i64]) :i64 { return rt_vecs_pop(v) }
 }
 
+// ── set ─────────────────────────────────────────────────────────
+pub fn set: () {
+    pub fn i64: (v :&vec[i64], index :i64, value :i64) { rt_vecs_set_i64(v, index, value) }
+}
+
 // ── get ─────────────────────────────────────────────────────────
 pub fn get: () {
     pub fn i64: (v :&vec[i64], index :i64) :i64 { return rt_vecs_get_i64(v, index) }
-    pub fn str: (v :vec[str], index :i64) :str { return rt_vecs_get_ptr(v, index) }
+    pub fn str: (v :&vec[str], index :i64) :str { return rt_vecs_get_ptr(v, index) }
 }
 
 // ── first ───────────────────────────────────────────────────────

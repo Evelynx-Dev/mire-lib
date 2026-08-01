@@ -2,6 +2,24 @@
 
 All notable changes to the mire standard library.
 
+## [0.0.6] - 2026-08-01 (map/vec ownership alignment)
+
+### Changed
+
+- **`mire::map` read-only functions take `&anything`**: `len`, `has`,
+  `is::empty`, `get::str/i64`, `keys`, `values::i64`, `entries`, `count`,
+  `remove` no longer require a concrete `&map[str anything]` type, so passing a
+  map does not move it. `set::str/i64` and `merge` now **return the map**
+  (the runtime may reallocate the backing storage — same contract as
+  `vec::push`). Added `map::count` (alias for `entries`). Keys and str values
+  are declared `&str` because the runtime copies them internally.
+- **`mire::vec`**: added `set::i64(v, index, value)` (in-place element write via
+  `rt_vecs_set_i64`). `get::str` now takes `&vec[str]` (previously `vec[str]` by
+  value, which caused "expects Vector, got Ref" at kioto CLI call sites).
+- **`mire::str::from::bool`** now takes `:bool` (was `:i64`) and emits
+  `"true"`/`"false"` via `rt_bool_to_string`.
+- Updated the Kioto compatibility reference to the current `2.4.3` release.
+
 ## [0.0.5] - 2026-07-28 (Runtime ABI alignment)
 
 ### Fixed

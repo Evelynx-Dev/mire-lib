@@ -1,0 +1,11 @@
+// `assert!(cond "message")` — aborts the process with `rt_panic_loc` when `cond`
+// is false, so failing assertions stop execution immediately (the panic hook
+// that bounds checks use).
+
+extern fn rt_panic_loc: (msg :str line :i64 col :i64 file :str) lib "c"
+
+@[macro!] pub fn assert: (cond :bool msg :str) {
+    if !cond {
+        rt_panic_loc(msg 0 0 "")
+    }
+}

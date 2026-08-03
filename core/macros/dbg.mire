@@ -1,0 +1,12 @@
+// `dbg!(v)` — print an i64 value for debugging and return it unchanged, so it
+// can be dropped into any expression: `set x = dbg!(compute())`.
+//
+// `dasu` is the builtin print function (dispatches on type), so the macro body
+// prints the value and returns it. `dbg!` is i64-typed for V1 (a generic
+// `dbg!` requires function-level generics, which mire does not yet support);
+// for other types call `dasu(v)` directly.
+
+@[macro!] pub fn dbg: (v :i64) :i64 {
+    dasu(v)
+    return v
+}

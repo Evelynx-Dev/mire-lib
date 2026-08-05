@@ -1,6 +1,6 @@
 [project]
 name = "mire"
-version = "0.0.6"
+version = "0.0.7"
 description = "Library for the Mire language"
 entry = "code/mod.mire"
 
@@ -31,3 +31,12 @@ assert = "core/macros/assert"
 dbg = "core/macros/dbg"
 panic = "core/macros/panic"
 unreachable = "core/macros/panic"
+
+# Strict security mode. All externs in mire's core are runtime helpers
+# (`rt_*`), declared with `lib "c"`; every macro mire ships is allowlisted so
+# `assert!`/`dbg!`/`panic!`/`unreachable!` remain available in strict projects.
+[security]
+mode = "strict"
+externs = ["rt_*"]
+extern_libs = ["c"]
+macros = ["assert", "dbg", "panic", "unreachable"]

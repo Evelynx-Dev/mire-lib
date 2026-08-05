@@ -2,6 +2,16 @@
 
 All notable changes to the mire standard library.
 
+## [0.0.7] - 2026-08-05 (strict security mode)
+
+### Changed
+
+- **Manifest enables `mode = "strict"`** (`owl.toml` `[security]`): mire's core
+  uses only `rt_*` externs (declared `lib "c"`), so `externs = ["rt_*"]` and
+  `extern_libs = ["c"]` cover every helper. All shipped macros (`assert`, `dbg`,
+  `panic`, `unreachable`) are allowlisted, so projects depending on mire keep
+  working when they also enable strict mode. No library source changed.
+
 ## [0.0.6] - 2026-08-01 (map/vec ownership alignment)
 
 ### Changed

@@ -115,3 +115,7 @@ via `pub fn parent: () { pub fn child: ... }`). Every existing function is prese
 - `mire::maybe` — optional type: some, none, is_some, is_none, unwrap, unwrap_or, free
 - `mire::result` — result type: ok, err, is_ok, is_err, unwrap, unwrap_or, free
 - `mire::arr` — fixed-size array operations: len, first, last, contains, index_of, reverse, join
+## Unreleased
+
+- Added native Mire assertion helpers `assert_eq!`, `assert_ne!`, and
+  `trace_i64!`, available through the strict macro allowlist.

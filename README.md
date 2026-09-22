@@ -1,4 +1,4 @@
-# mire v0.0.6
+# mire v1.0.0
 
 Standard library for the [Mire](https://github.com/mire-lang) programming language.
 

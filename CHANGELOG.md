@@ -2,6 +2,23 @@
 
 All notable changes to the mire standard library.
 
+## [1.0.0] - 2026-09-22 (first stable release)
+
+### Added
+
+- Stable macros: `assert_eq!`, `assert_ne!`, `trace_i64!` in `core/macros/checks`.
+- Updated `core/vec` and `core/mod` with latest fixes.
+
+### Changed
+
+- Bumped library version to 1.0.0.
+- Updated `owl.toml` dependencies and macros sections.
+
+## [0.0.7] - 2026-08-05 (strict security mode)
+# Changelog
+
+All notable changes to the mire standard library.
+
 ## [0.0.7] - 2026-08-05 (strict security mode)
 
 ### Changed
